@@ -16,8 +16,15 @@ struct ProfileCardModel: Identifiable {
 //     샘플 데이터
         static let sampleProfileDatas = [
             ProfileCardModel(name: "Rumy", category: .tech, ProfileImageName: "profile-1"),
+            ProfileCardModel(name: "Rumy", category: .tech, ProfileImageName: "profile-1"),
+            ProfileCardModel(name: "Rumy", category: .tech, ProfileImageName: "profile-1"),
+            
             ProfileCardModel(name: "Green", category: .design, ProfileImageName: "profile-2"),
+            ProfileCardModel(name: "Green", category: .design, ProfileImageName: "profile-2"),
+            ProfileCardModel(name: "Green", category: .design, ProfileImageName: "profile-2"),
+            
+            ProfileCardModel(name: "Zigu", category: .business, ProfileImageName: "profile-3"),
+            ProfileCardModel(name: "Zigu", category: .business, ProfileImageName: "profile-3"),
             ProfileCardModel(name: "Zigu", category: .business, ProfileImageName: "profile-3"),
         ]
-
 }
