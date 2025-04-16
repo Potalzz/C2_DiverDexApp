@@ -250,7 +250,7 @@ struct MemoEditorView: View {
     }
 }
 
-// MARK: - 앨범
+// MARK: - 앨범 뷰
 struct ProfileAlbumView: View {
     let albumImages: [String]
 
@@ -262,71 +262,60 @@ struct ProfileAlbumView: View {
 
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .foregroundStyle(
-                        Color("ProfileCardBackground")
-                    )
+                    .foregroundStyle(Color("ProfileCardBackground"))
                     .frame(maxWidth: .infinity)
 
-                Grid(
-                    alignment: .center, horizontalSpacing: 30,
-                    verticalSpacing: 15
-                ) {
-                    // 2개씩 짝지어 행을 생성
-                    ForEach(
-                        0..<albumImages.count / 2 + 1,
-                        id: \.self
-                    ) { rowIndex in
-                        GridRow {
-                            ForEach(0..<2) { columnIndex in
-                                let imageIndex =
-                                    rowIndex * 2 + columnIndex
-                                if imageIndex
-                                    < albumImages.count
-                                {
-                                    Image(
-                                        albumImages[imageIndex]
-                                    )
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(
-                                        width: 148, height: 104
-                                    )
-                                    .clipShape(
-                                        RoundedRectangle(
-                                            cornerRadius: 8))
-                                } else {
-                                    // 이미지가 없는 경우 빈 공간 생성
-                                    ZStack {
-                                        RoundedRectangle(
-                                            cornerRadius: 8
-                                        )
-                                        .frame(
-                                            width: 148,
-                                            height: 104
-                                        )
-                                        .foregroundStyle(
-                                            Color(
-                                                "AddImageBackground"
-                                            ))
-
-                                        Image(
-                                            systemName:
-                                                "photo.badge.plus"
-                                        )
-                                        .font(.system(size: 34))
-                                        .fontWeight(.semibold)
-                                        .foregroundStyle(.gray)
-
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                .padding()
+                AlbumGrid(albumImages: albumImages)
+                    .padding()
             }
         }
         .padding(.horizontal, 50)
         Spacer()
+    }
+}
+
+// MARK: - 앨범 그리드
+struct AlbumGrid: View {
+    let albumImages: [String]
+
+    var body: some View {
+        Grid(alignment: .center, horizontalSpacing: 30, verticalSpacing: 15) {
+            ForEach(0..<(albumImages.count + 1) / 2, id: \.self) { rowIndex in
+                GridRow {
+                    ForEach(0..<2) { coumnIndex in
+                        let imageIndex = rowIndex * 2 + coumnIndex
+                        if imageIndex < albumImages.count {
+                            AlbumImage(imageName: albumImages[imageIndex])
+                        } else {
+                            // 이미지 추가 버튼
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .frame(width: 148, height: 104)
+                                    .foregroundStyle(Color("AddImageBackground"))
+
+                                Image(systemName: "photo.badge.plus")
+                                    .font(.system(size: 34))
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(.gray)
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+}
+
+// MARK: - 앨범 이미지
+struct AlbumImage: View {
+    let imageName: String
+
+    var body: some View {
+        Image(imageName)
+            .resizable()
+            .scaledToFit()
+            .frame(width: 148, height: 104)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
