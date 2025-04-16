@@ -8,18 +8,15 @@
 import SwiftUI
 
 struct HomeView: View {
-    let profiles = ProfileCardModel.sampleProfileDatas
+    let profiles = DummyData.sampleProfileDatas
 
     var body: some View {
-        ZStack {
-            Color("Background")
-
-            VStack(spacing: 15) {
-                HeaderView()
-                SearchView()
-                ProfileGridView(profiles: profiles)
-            }
+        VStack(spacing: 15) {
+            HeaderView()
+            SearchView()
+            ProfileGridView(profiles: profiles)
         }
+        .background(Color("Background"))
         .hideKeyboardWhenTappedAround()
     }
 }
