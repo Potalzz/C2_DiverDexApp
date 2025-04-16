@@ -29,7 +29,7 @@ struct DummyData {
         ),
     ]
 
-    static let sampleProfileDetailDatas = [
+    static let sampleProfileDetailInfoDatas = [
         ProfileDetailInfo(
             name: "김진혁",
             nickname: "Velko",
@@ -42,4 +42,17 @@ struct DummyData {
             mbti: "INTP"
         )
     ]
+
+    static let sampleProfilDetailModel = ProfileModel(
+        profileCard: ProfileCardModel(
+            name: "Velko",
+            category: .tech,
+            ProfileImageName: "profile-1"
+        ),
+        number: 4,
+        info: sampleProfileDetailInfoDatas[0],
+        memo: "",
+        albumImages: ["albumImage-1", "albumImage-2", "albumImage-3"],
+        backgroundImage: "Velkoz"
+    )
 }
