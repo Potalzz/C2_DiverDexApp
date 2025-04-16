@@ -15,7 +15,7 @@ struct ProfileGridView: View {
         ScrollView {
             LazyVGrid(columns: columns) {
                 ForEach(profiles) { profile in
-                    ProfileCardView(model: profile)
+                    ProfileCardView(profile: profile)
                         .padding(.vertical, 8)
                 }
             }
@@ -25,5 +25,5 @@ struct ProfileGridView: View {
 }
 
 #Preview {
-    HomeView()
+    ProfileGridView(profiles: DummyData.sampleProfileDatas)
 }

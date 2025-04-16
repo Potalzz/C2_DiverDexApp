@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileCardModel: Identifiable {
     let id = UUID()
-    let name: String
+    let nickname: String
     let category: ProfileCategory
     let ProfileImageName: String
 }

@@ -7,25 +7,25 @@
 struct DummyData {
     static let sampleProfileDatas = [
         ProfileCardModel(
-            name: "Rumy", category: .tech, ProfileImageName: "profile-1"),
+            nickname: "Rumy", category: .tech, ProfileImageName: "profile-1"),
         ProfileCardModel(
-            name: "Rumy", category: .tech, ProfileImageName: "profile-1"),
+            nickname: "Rumy", category: .tech, ProfileImageName: "profile-1"),
         ProfileCardModel(
-            name: "Rumy", category: .tech, ProfileImageName: "profile-1"),
+            nickname: "Rumy", category: .tech, ProfileImageName: "profile-1"),
 
         ProfileCardModel(
-            name: "Green", category: .design, ProfileImageName: "profile-1"),
+            nickname: "Green", category: .design, ProfileImageName: "profile-1"),
         ProfileCardModel(
-            name: "Green", category: .design, ProfileImageName: "profile-1"),
+            nickname: "Green", category: .design, ProfileImageName: "profile-1"),
         ProfileCardModel(
-            name: "Green", category: .design, ProfileImageName: "profile-1"),
+            nickname: "Green", category: .design, ProfileImageName: "profile-1"),
 
         ProfileCardModel(
-            name: "Zigu", category: .business, ProfileImageName: "profile-1"),
+            nickname: "Zigu", category: .business, ProfileImageName: "profile-1"),
         ProfileCardModel(
-            name: "iL", category: .business, ProfileImageName: "profile-1"),
+            nickname: "iL", category: .business, ProfileImageName: "profile-1"),
         ProfileCardModel(
-            name: "Presence", category: .business, ProfileImageName: "profile-1"
+            nickname: "Presence", category: .business, ProfileImageName: "profile-1"
         ),
     ]
 
@@ -45,7 +45,7 @@ struct DummyData {
 
     static let sampleProfilDetailModel = ProfileModel(
         profileCard: ProfileCardModel(
-            name: "Velko",
+            nickname: "Velko",
             category: .tech,
             ProfileImageName: "profile-1"
         ),

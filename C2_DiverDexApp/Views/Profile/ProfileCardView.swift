@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileCardView: View {
-    let model: ProfileCardModel
+    let profile: ProfileCardModel
 
     var body: some View {
         ZStack {
@@ -19,28 +19,18 @@ struct ProfileCardView: View {
 
             HStack {
                 VStack(alignment: .center) {
-                    Text(model.name)
+                    Text(profile.nickname)
                         .font(.title3)
                         .fontWeight(.semibold)
                         .frame(maxWidth: 60)
                         .minimumScaleFactor(0.5)
                         .lineLimit(1)
 
-                    ZStack {
-                        Capsule()
-                            .foregroundStyle(Color("ProfileCardBackground"))
-                            .opacity(0.2)
-                            .shadow(color: .black, radius: 1, x: 0.7, y: 0.5)
-                            .frame(width: model.category.boxSize, height: 20)
-                        Text(model.category.rawValue)
-                            .font(.caption)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(Color(model.category.color))
-                    }
+                    CategoryTag(profile: profile)
                 }
                 .padding(.leading, 10)
                 
-                Image(model.ProfileImageName)
+                Image(profile.ProfileImageName)
                     .resizable()
                     .scaledToFit()
                     .frame(height: 60)
@@ -52,5 +42,8 @@ struct ProfileCardView: View {
 }
 
 #Preview {
-    HomeView()
+//    HomeView()
+    ProfileCardView(profile: DummyData.sampleProfileDatas[1])
+    ProfileCardView(profile: DummyData.sampleProfileDatas[3])
+    ProfileCardView(profile: DummyData.sampleProfileDatas[6])
 }

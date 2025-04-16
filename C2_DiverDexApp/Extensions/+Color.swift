@@ -14,4 +14,5 @@ extension Color {
     static let KeyColor = Color("KeyColor")
     static let ProfileCardBackground = Color("ProfileCardBackground")
     static let ProfileDetailViewBackground = Color("ProfileDetailViewBackground")
+    static let AddImageBackground = Color("AddImageBackground")
 }

@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct ProfileDetailPageView: View {
+    @StateObject private var viewModel = ProfileDetailViewModel()
     private let imageHeight: CGFloat = 250
-    @State private var memoText = ""
-    let albumImages = ["albumImage-1", "albumImage-2", "albumImage-3"]
 
     var body: some View {
         ScrollView {
@@ -22,10 +21,13 @@ struct ProfileDetailPageView: View {
                     .opacity(0.75)
 
                 VStack(spacing: 50) {
-                    ProfileDetailCardView()
-                    ProfileInfoView()
-                    ProfileMemoView()
-                    ProfileAlbumView()
+                    ProfileDetailCardView(viewModel: viewModel)
+                    ProfileInfoView(
+                        info: viewModel.profile.info,
+                        name: viewModel.profile.info.name,
+                        nickname: viewModel.profile.profileCard.nickname)
+                    ProfileMemoView(viewModel: viewModel)
+                    ProfileAlbumView(albumImages: viewModel.profile.albumImages)
                 }
             }
             .background(Color.ProfileDetailViewBackground)
@@ -40,6 +42,8 @@ struct ProfileDetailPageView: View {
 
 // MARK: - 프로필 카드
 struct ProfileDetailCardView: View {
+    @StateObject var viewModel: ProfileDetailViewModel
+
     var body: some View {
         ZStack(alignment: .top) {
             ZStack(alignment: .topTrailing) {
@@ -58,54 +62,30 @@ struct ProfileDetailCardView: View {
             }
 
             VStack(alignment: .center) {
-
                 Circle()
                     .foregroundStyle(.white)
                     .frame(height: 96)
                     .overlay {
-                        Image("profile-1")
+                        Image(viewModel.profile.profileCard.ProfileImageName)
                             .resizable()
                             .scaledToFit()
                             .padding(7)
                             .position(x: 48, y: 43)
                     }
 
-                Text("Velko")
+                Text(viewModel.profile.profileCard.nickname)
                     .font(.title2)
                     .fontWeight(.semibold)
                     .padding(.bottom, 15)
 
-                Text("#4")
+                Text("#\(viewModel.profile.number)")
                     .font(.caption)
                     .fontWeight(.medium)
                     .foregroundStyle(.black)
                     .padding(.bottom, 10)
 
-                Capsule()
-                    .foregroundStyle(
-                        Color(
-                            "ProfileCardBackground"
-                        )
-                    )
-                    .opacity(0.2)
-                    .shadow(
-                        color: .black,
-                        radius: 1, x: 0.7,
-                        y: 0.5
-                    )
-                    .frame(
-                        width: 70, height: 30
-                    )
-                    .overlay {
-                        Text("Tech")
-                            .font(.caption)
-                            .fontWeight(
-                                .semibold
-                            )
-                            .foregroundStyle(
-                                Color(
-                                    "KeyColor"))
-                    }
+                CategoryTag(
+                    profile: DummyData.sampleProfileDatas[5], isDetail: true)
 
                 Spacer()
             }
@@ -118,6 +98,10 @@ struct ProfileDetailCardView: View {
 
 // MARK: - 정보
 struct ProfileInfoView: View {
+    let info: ProfileDetailInfo
+    let name: String
+    let nickname: String
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("⭐️ 정보")
@@ -127,7 +111,7 @@ struct ProfileInfoView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
                     .frame(height: 350)
-                    .foregroundStyle(Color("ProfileCardBackground"))
+                    .foregroundStyle(Color.ProfileCardBackground)
                     .shadow(
                         color: Color(.systemGray3), radius: 2, x: 1,
                         y: 2
@@ -135,7 +119,7 @@ struct ProfileInfoView: View {
 
                 VStack(alignment: .leading, spacing: 20) {
                     HStack {
-                        Text("김진혁")
+                        Text(name)
 
                         Divider()
                             .frame(height: 20)
@@ -143,14 +127,23 @@ struct ProfileInfoView: View {
 
                         Spacer()
 
-                        Text("Velko")
+                        Text(nickname)
 
                     }
                     .font(.system(size: 20))
                     .fontWeight(.semibold)
 
                     Divider()
-                }.padding(.horizontal)
+
+                    InfoRowView(title: "이름", value: info.name)
+                    InfoRowView(title: "메일", value: info.email)
+                    InfoRowView(title: "블로그", value: info.blog)
+                    InfoRowView(title: "러너위키", value: info.wiki)
+                    InfoRowView(title: "인스타그램", value: info.instagram)
+                    InfoRowView(title: "관심사", value: info.interests)
+                    InfoRowView(title: "MBTI", value: info.mbti)
+                }
+                .padding(.horizontal)
             }
 
         }
@@ -160,6 +153,9 @@ struct ProfileInfoView: View {
 
 // MARK: - 메모
 struct ProfileMemoView: View {
+    @ObservedObject var viewModel: ProfileDetailViewModel
+    @State private var showingMemoEditor = false
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -172,7 +168,7 @@ struct ProfileMemoView: View {
                 Button(
                     action: {
                         // 버튼 눌리면, modal나오고 메모 작성 화면 나오게.
-
+                        showingMemoEditor = true
                     },
                     label: {
                         Image(systemName: "square.and.pencil")
@@ -183,35 +179,80 @@ struct ProfileMemoView: View {
 
             RoundedRectangle(cornerRadius: 8)
                 .frame(height: 350)
-                .foregroundStyle(Color("ProfileCardBackground"))
+                .foregroundStyle(Color.ProfileCardBackground)
                 .shadow(
                     color: Color(.systemGray3), radius: 2, x: 1,
                     y: 2
                 )
                 .overlay {
                     VStack(alignment: .leading) {
-                        //                                        TextField("메모를 작성해주세요.", text: $memoText)
-                        HStack {
-                            Text("메모를 작성해주세요.")
-                                .font(.headline)
-                                .fontWeight(.light)
-                                .foregroundStyle(.secondary)
+                        if viewModel.memoText.isEmpty {
+                            HStack {
+                                Text("메모를 작성해주세요.")
+                                    .font(.headline)
+                                    .fontWeight(.light)
+                                    .foregroundStyle(.secondary)
+                                    .padding()
+                                Spacer()
+                            }
+
+                        } else {
+                            Text(viewModel.memoText)
                                 .padding()
-                            Spacer()
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         }
 
                         Spacer()
                     }
-
                 }
         }
         .padding(.horizontal, 46)
+        .sheet(isPresented: $showingMemoEditor) {
+            MemoEditorView(memo: viewModel.memoText) { newMemo in
+                viewModel.updateMemo(newMemo)
+            }
+        }
+    }
+}
+
+// MARK: - 메모 작성 뷰
+struct MemoEditorView: View {
+    @Environment(\.dismiss) private var dismiss
+    @State private var memoText: String
+    let onSave: (String) -> Void
+
+    init(memo: String, onSave: @escaping (String) -> Void) {
+        _memoText = State(initialValue: memo)
+        self.onSave = onSave
+    }
+
+    var body: some View {
+        NavigationStack {
+            TextEditor(text: $memoText)
+                .padding()
+                .navigationTitle("메모 작성")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("취소") {
+                            dismiss()
+                        }
+                    }
+
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("저장") {
+                            onSave(memoText)
+                            dismiss()
+                        }
+                    }
+                }
+        }
     }
 }
 
 // MARK: - 앨범
 struct ProfileAlbumView: View {
-    let albumImages = ["albumImage-1", "albumImage-2", "albumImage-3"]
+    let albumImages: [String]
 
     var body: some View {
         VStack(alignment: .leading) {
