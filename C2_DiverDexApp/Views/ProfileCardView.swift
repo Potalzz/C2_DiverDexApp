@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ProfileCardView: View {
+    let model: ProfileCardModel
+    
 
     var body: some View {
         RoundedRectangle(cornerRadius: 12)
@@ -18,7 +20,7 @@ struct ProfileCardView: View {
             .overlay {
                 HStack {
                     VStack {
-                        Text("Jack")
+                        Text(model.name)
                             .font(.title3)
                             .fontWeight(.semibold)
 
@@ -28,12 +30,12 @@ struct ProfileCardView: View {
                             .shadow(color: .black, radius: 1, x: 0.7, y: 0.5)
                             
                             .overlay {
-                                Text("Tech")
+                                Text(model.category.rawValue)
                                     .font(.caption)
                                     .fontWeight(.semibold)
-                                    .foregroundStyle(Color("KeyColor"))
+                                    .foregroundStyle(Color(model.category.color))
                             }
-                            .frame(width: 50)
+                            .frame(width: model.category.boxSize)
                             
                     }
                     .padding(.leading, 15)
@@ -41,7 +43,7 @@ struct ProfileCardView: View {
 
                     Spacer()
 
-                    Image("profile-1")
+                    Image(model.ProfileImageName)
                         .resizable()
                         .scaledToFit()
                 }
@@ -54,5 +56,5 @@ struct ProfileCardView: View {
 }
 
 #Preview {
-    ProfileCardView()
+    ProfileCardView(model: ProfileCardModel.sampleProfileDatas[0])
 }

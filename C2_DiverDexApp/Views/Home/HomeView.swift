@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    let profiles = ["12", "3", "4"]
+struct HomeView: View {
+    let profiles = ProfileCardModel.sampleProfileDatas
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
 
     var body: some View {
@@ -23,7 +23,6 @@ struct ContentView: View {
                         .fontWeight(.bold)
                         .foregroundStyle(Color("KeyColor"))
                         
-
                     Spacer()
                 }
                 .padding(.horizontal)
@@ -33,21 +32,19 @@ struct ContentView: View {
 
                 ScrollView {
                     LazyVGrid(columns: columns) {
-                        ForEach(0..<15, id: \.self) { num in
-                            ProfileCardView()
+                        ForEach(profiles) { profile in
+                            ProfileCardView(model: profile)
                                 .padding(.vertical, 8)
                         }
                     }
                     .padding(.horizontal)
                 }
             }
-
         }
         .hideKeyboardWhenTappedAround()
-
     }
 }
 
 #Preview {
-    ContentView()
+    HomeView()
 }
