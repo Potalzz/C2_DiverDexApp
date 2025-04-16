@@ -22,6 +22,9 @@ struct ProfileCardView: View {
                     Text(model.name)
                         .font(.title3)
                         .fontWeight(.semibold)
+                        .frame(maxWidth: 60)
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
 
                     ZStack {
                         Capsule()
@@ -34,14 +37,15 @@ struct ProfileCardView: View {
                             .fontWeight(.semibold)
                             .foregroundStyle(Color(model.category.color))
                     }
-
                 }
-                .padding(.leading, 5)
-                .padding(.top, 10)
+                .padding(.leading, 10)
+                
                 Image(model.ProfileImageName)
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 70)
+                    .frame(height: 60)
+                    .padding(.bottom, 10)
+                    .padding(.leading, 5)
             }
         }
     }
@@ -49,5 +53,4 @@ struct ProfileCardView: View {
 
 #Preview {
     HomeView()
-//    ProfileCardView(model: ProfileCardModel.sampleProfileDatas[0])
 }
