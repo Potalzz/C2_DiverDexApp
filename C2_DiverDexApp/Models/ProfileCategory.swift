@@ -15,11 +15,11 @@ enum ProfileCategory: String, CaseIterable {
     var color: Color {
         switch self {
         case .tech:
-            return Color("KeyColor")
+            return Color.KeyColor
         case .design:
-            return Color("DesignText")
+            return Color.DesignText
         case .business:
-            return Color("BusinessText")
+            return Color.BusinessText
         }
     }
     

@@ -16,7 +16,7 @@ struct HomeView: View {
             SearchView()
             ProfileGridView(profiles: profiles)
         }
-        .background(Color("Background"))
+        .background(Color.Background)
         .hideKeyboardWhenTappedAround()
     }
 }

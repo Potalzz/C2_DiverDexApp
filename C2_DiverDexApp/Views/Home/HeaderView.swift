@@ -13,7 +13,7 @@ struct HeaderView: View {
             Text("DiverDex")
                 .font(.title)
                 .fontWeight(.bold)
-                .foregroundStyle(Color("KeyColor"))
+                .foregroundStyle(Color.KeyColor)
                 
             Spacer()
         }
