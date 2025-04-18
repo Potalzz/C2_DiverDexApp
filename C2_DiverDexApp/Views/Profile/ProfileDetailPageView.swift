@@ -130,14 +130,13 @@ struct ProfileInfoView: View {
                     TextWithPopup(title: "인스타그램", value: info.instagram)
                     TextWithPopup(title: "관심사", value: info.interests)
                     TextWithPopup(title: "MBTI", value: info.mbti)
-
                 }
                 .padding(.vertical)
                 .padding(.bottom, 10)
             }
 
         }
-        .padding(.horizontal, 46)
+        .padding(.horizontal, 50)
     }
 }
 
@@ -145,7 +144,7 @@ struct TextWithPopup: View {
     let title: String
     let value: String
     @State private var showPopup = false
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top) {
@@ -153,32 +152,33 @@ struct TextWithPopup: View {
                     .font(.system(size: 16))
                     .fontWeight(.medium)
                     .frame(width: 100, alignment: .leading)
-                
+
                 Text(value)
                     .font(.system(size: 16))
                     .foregroundColor(.secondary)
-//                    .lineLimit(1)
+                    //                    .lineLimit(1)
                     .truncationMode(.tail)
                     .contentShape(Rectangle())
                     .onLongPressGesture {
                         withAnimation {
                             showPopup.toggle()
                         }
-                        
+
                         if showPopup {
                             // 3초 후 자동으로 닫힘
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 3)
+                            {
                                 withAnimation {
                                     showPopup = false
                                 }
                             }
                         }
                     }
-                
+
                 Spacer()
             }
             .padding(.horizontal)
-            
+
             // 팝업을 텍스트 행 바로 아래에 배치
             if showPopup {
                 Text(value)
@@ -188,7 +188,9 @@ struct TextWithPopup: View {
                     .background(
                         RoundedRectangle(cornerRadius: 8)
                             .fill(Color(.systemBackground))
-                            .shadow(color: Color(.systemGray3), radius: 3, x: 1, y: 2)
+                            .shadow(
+                                color: Color(.systemGray3), radius: 3, x: 1,
+                                y: 2)
                     )
                     .padding(.horizontal)
                     .padding(.top, 5)
@@ -229,37 +231,37 @@ struct ProfileMemoView: View {
                     })
             }
 
-            RoundedRectangle(cornerRadius: 8)
-                .frame(height: 350)
-                .foregroundStyle(Color.ProfileCardBackground)
-                .shadow(
-                    color: Color(.systemGray3), radius: 2, x: 1,
-                    y: 2
-                )
-                .overlay {
-                    VStack(alignment: .leading) {
-                        if viewModel.memoText.isEmpty {
-                            HStack {
-                                Text("메모를 작성해주세요.")
-                                    .font(.headline)
-                                    .fontWeight(.light)
-                                    .foregroundStyle(.secondary)
-                                    .padding()
-                                Spacer()
-                            }
+            ZStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .frame(height: 350)
+                    .foregroundStyle(Color.ProfileCardBackground)
+                    .shadow(
+                        color: Color(.systemGray3), radius: 2, x: 1,
+                        y: 2
+                    )
 
-                        } else {
-                            Text(viewModel.memoText)
+                VStack(alignment: .leading) {
+                    if viewModel.memoText.isEmpty {
+                        HStack {
+                            Text("메모를 작성해주세요.")
+                                .font(.headline)
+                                .fontWeight(.light)
+                                .foregroundStyle(.secondary)
                                 .padding()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-
+                            Spacer()
                         }
 
-                        Spacer()
+                    } else {
+                        Text(viewModel.memoText)
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
+
+                    Spacer()
                 }
+            }
         }
-        .padding(.horizontal, 46)
+        .padding(.horizontal, 50)
         .sheet(isPresented: $showingMemoEditor) {
             MemoEditorView(memo: viewModel.memoText) { newMemo in
                 viewModel.updateMemo(newMemo)
