@@ -110,7 +110,6 @@ struct ProfileInfoView: View {
 
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .frame(height: 350)
                     .foregroundStyle(Color.ProfileCardBackground)
                     .shadow(
                         color: Color(.systemGray3), radius: 2, x: 1,
@@ -118,36 +117,89 @@ struct ProfileInfoView: View {
                     )
 
                 VStack(alignment: .leading, spacing: 20) {
-                    HStack {
-                        Text(name)
-
-                        Divider()
-                            .frame(height: 20)
-                            .padding(.leading, 10)
-
-                        Spacer()
-
-                        Text(nickname)
-
-                    }
-                    .font(.system(size: 20))
-                    .fontWeight(.semibold)
-
+                    Text(nickname)
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .padding(.leading, 20)
                     Divider()
 
-                    InfoRowView(title: "이름", value: info.name)
-                    InfoRowView(title: "메일", value: info.email)
-                    InfoRowView(title: "블로그", value: info.blog)
-                    InfoRowView(title: "러너위키", value: info.wiki)
-                    InfoRowView(title: "인스타그램", value: info.instagram)
-                    InfoRowView(title: "관심사", value: info.interests)
-                    InfoRowView(title: "MBTI", value: info.mbti)
+                    TextWithPopup(title: "이름", value: info.name)
+                    TextWithPopup(title: "메일", value: info.email)
+                    TextWithPopup(title: "블로그", value: info.blog)
+                    TextWithPopup(title: "러너위키", value: info.wiki)
+                    TextWithPopup(title: "인스타그램", value: info.instagram)
+                    TextWithPopup(title: "관심사", value: info.interests)
+                    TextWithPopup(title: "MBTI", value: info.mbti)
+
                 }
-                .padding(.horizontal)
+                .padding(.vertical)
+                .padding(.bottom, 10)
             }
 
         }
         .padding(.horizontal, 46)
+    }
+}
+
+struct TextWithPopup: View {
+    let title: String
+    let value: String
+    @State private var showPopup = false
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .top) {
+                Text(title)
+                    .font(.system(size: 16))
+                    .fontWeight(.medium)
+                    .frame(width: 100, alignment: .leading)
+                
+                Text(value)
+                    .font(.system(size: 16))
+                    .foregroundColor(.secondary)
+//                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .contentShape(Rectangle())
+                    .onLongPressGesture {
+                        withAnimation {
+                            showPopup.toggle()
+                        }
+                        
+                        if showPopup {
+                            // 3초 후 자동으로 닫힘
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                withAnimation {
+                                    showPopup = false
+                                }
+                            }
+                        }
+                    }
+                
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            // 팝업을 텍스트 행 바로 아래에 배치
+            if showPopup {
+                Text(value)
+                    .font(.system(size: 14))
+                    .padding(10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color(.systemBackground))
+                            .shadow(color: Color(.systemGray3), radius: 3, x: 1, y: 2)
+                    )
+                    .padding(.horizontal)
+                    .padding(.top, 5)
+                    .transition(.opacity)
+                    .onTapGesture {
+                        withAnimation {
+                            showPopup = false
+                        }
+                    }
+            }
+        }
     }
 }
 
@@ -200,6 +252,7 @@ struct ProfileMemoView: View {
                             Text(viewModel.memoText)
                                 .padding()
                                 .frame(maxWidth: .infinity, alignment: .leading)
+
                         }
 
                         Spacer()
@@ -240,6 +293,7 @@ struct MemoEditorView: View {
                     }
 
                     ToolbarItem(placement: .confirmationAction) {
+
                         Button("저장") {
                             onSave(memoText)
                             dismiss()
@@ -260,21 +314,28 @@ struct ProfileAlbumView: View {
                 .font(.system(size: 20))
                 .fontWeight(.semibold)
 
-            ZStack {
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundStyle(Color("ProfileCardBackground"))
-                    .frame(maxWidth: .infinity)
+            Button(
+                action: {
+                    // 버튼 눌렀을 때, 사진 추가할 수 있게.
 
-                AlbumGrid(albumImages: albumImages)
-                    .padding()
-            }
+                },
+                label: {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12)
+                            .foregroundStyle(Color("ProfileCardBackground"))
+                            .frame(maxWidth: .infinity)
+
+                        AlbumGrid(albumImages: albumImages)
+                            .padding()
+                    }
+                })
+
         }
         .padding(.horizontal, 50)
         Spacer()
     }
 }
 
-// MARK: - 앨범 그리드
 struct AlbumGrid: View {
     let albumImages: [String]
 
@@ -286,12 +347,15 @@ struct AlbumGrid: View {
                         let imageIndex = rowIndex * 2 + coumnIndex
                         if imageIndex < albumImages.count {
                             AlbumImage(imageName: albumImages[imageIndex])
+                            // 이미지 꾹 눌렀을 때, 삭제 팝업 나오고 삭제할 수 있도록.
+
                         } else {
                             // 이미지 추가 버튼
                             ZStack {
                                 RoundedRectangle(cornerRadius: 8)
                                     .frame(width: 148, height: 104)
-                                    .foregroundStyle(Color("AddImageBackground"))
+                                    .foregroundStyle(
+                                        Color("AddImageBackground"))
 
                                 Image(systemName: "photo.badge.plus")
                                     .font(.system(size: 34))
@@ -301,13 +365,11 @@ struct AlbumGrid: View {
                         }
                     }
                 }
-
             }
         }
     }
 }
 
-// MARK: - 앨범 이미지
 struct AlbumImage: View {
     let imageName: String
 

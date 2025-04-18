@@ -24,7 +24,7 @@ struct CategoryTag: View {
                 .shadow(color: .black, radius: 1, x: 0.7, y: 0.5)
                 .frame(width: isDetail ? profile.category.boxSize * 1.3 : profile.category.boxSize, height: isDetail ? 26 : 20)
             Text(profile.category.rawValue)
-                .font(isDetail ? .callout : .caption)
+                .font(isDetail ? .caption : .caption)
                 .fontWeight(.semibold)
                 .foregroundStyle(Color(profile.category.color))
         }

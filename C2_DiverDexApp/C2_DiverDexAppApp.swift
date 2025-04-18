@@ -11,7 +11,7 @@ import SwiftUI
 struct C2_DiverDexAppApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            ProfileDetailPageView()
         }
     }
 }
