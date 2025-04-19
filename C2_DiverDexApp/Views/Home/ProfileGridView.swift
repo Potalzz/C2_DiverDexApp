@@ -10,7 +10,7 @@ import SwiftUI
 struct ProfileGridView: View {
     let profiles: [ProfileCardModel]
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
-    
+
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns) {

@@ -11,5 +11,5 @@ struct ProfileCardModel: Identifiable {
     let id = UUID()
     let nickname: String
     let category: ProfileCategory
-    let ProfileImageName: String
+    let profileImageName: String
 }

@@ -25,12 +25,13 @@ struct ProfileCardView: View {
                         .frame(maxWidth: 60)
                         .minimumScaleFactor(0.5)
                         .lineLimit(1)
+                        .foregroundStyle(.black)
 
                     CategoryTag(profile: profile)
                 }
                 .padding(.leading, 10)
                 
-                Image(profile.ProfileImageName)
+                Image(profile.profileImageName)
                     .resizable()
                     .scaledToFit()
                     .frame(height: 60)

@@ -7,25 +7,25 @@
 struct DummyData {
     static let sampleProfileDatas = [
         ProfileCardModel(
-            nickname: "Rumy", category: .tech, ProfileImageName: "profile-1"),
+            nickname: "Rumy", category: .tech, profileImageName: "profile-1"),
         ProfileCardModel(
-            nickname: "Rumy", category: .tech, ProfileImageName: "profile-1"),
+            nickname: "Rumy", category: .tech, profileImageName: "profile-1"),
         ProfileCardModel(
-            nickname: "Rumy", category: .tech, ProfileImageName: "profile-1"),
+            nickname: "Rumy", category: .tech, profileImageName: "profile-1"),
 
         ProfileCardModel(
-            nickname: "Green", category: .design, ProfileImageName: "profile-1"),
+            nickname: "Green", category: .design, profileImageName: "profile-1"),
         ProfileCardModel(
-            nickname: "Green", category: .design, ProfileImageName: "profile-1"),
+            nickname: "Green", category: .design, profileImageName: "profile-1"),
         ProfileCardModel(
-            nickname: "Green", category: .design, ProfileImageName: "profile-1"),
+            nickname: "Green", category: .design, profileImageName: "profile-1"),
 
         ProfileCardModel(
-            nickname: "Zigu", category: .business, ProfileImageName: "profile-1"),
+            nickname: "Zigu", category: .business, profileImageName: "profile-1"),
         ProfileCardModel(
-            nickname: "iL", category: .business, ProfileImageName: "profile-1"),
+            nickname: "iL", category: .business, profileImageName: "profile-1"),
         ProfileCardModel(
-            nickname: "Presence", category: .business, ProfileImageName: "profile-1"
+            nickname: "Presence", category: .business, profileImageName: "profile-1"
         ),
     ]
 
@@ -47,7 +47,7 @@ struct DummyData {
         profileCard: ProfileCardModel(
             nickname: "Velko",
             category: .tech,
-            ProfileImageName: "profile-1"
+            profileImageName: "profile-1"
         ),
         number: 4,
         info: sampleProfileDetailInfoDatas[0],

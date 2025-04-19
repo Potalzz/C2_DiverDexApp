@@ -11,13 +11,19 @@ struct HomeView: View {
     let profiles = DummyData.sampleProfileDatas
 
     var body: some View {
-        VStack(spacing: 15) {
-            HeaderView()
-            SearchView()
-            ProfileGridView(profiles: profiles)
+        NavigationStack {
+            VStack(spacing: 15) {
+                HeaderView()
+                SearchView()
+                NavigationLink() {
+                    ProfileDetailPageView()
+                } label: {
+                    ProfileGridView(profiles: profiles)
+                }
+            }
+            .background(Color.Background)
+            .hideKeyboardWhenTappedAround()
         }
-        .background(Color.Background)
-        .hideKeyboardWhenTappedAround()
     }
 }
 

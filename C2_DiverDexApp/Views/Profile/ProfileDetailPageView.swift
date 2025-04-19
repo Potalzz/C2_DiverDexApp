@@ -66,7 +66,7 @@ struct ProfileDetailCardView: View {
                     .foregroundStyle(.white)
                     .frame(height: 96)
                     .overlay {
-                        Image(viewModel.profile.profileCard.ProfileImageName)
+                        Image(viewModel.profile.profileCard.profileImageName)
                             .resizable()
                             .scaledToFit()
                             .padding(7)
@@ -328,10 +328,9 @@ struct ProfileAlbumView: View {
                             .frame(maxWidth: .infinity)
 
                         AlbumGrid(albumImages: albumImages)
-                            .padding()
+                            .padding(.horizontal)
                     }
                 })
-
         }
         .padding(.horizontal, 50)
         Spacer()

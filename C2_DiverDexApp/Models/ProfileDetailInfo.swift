@@ -5,7 +5,7 @@
 //  Created by PenguinLand on 4/16/25.
 //
 
-import SwiftUI
+import Foundation
 
 struct ProfileDetailInfo: Identifiable {
     let id = UUID()

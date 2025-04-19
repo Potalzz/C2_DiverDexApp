@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CategoryTag: View {
-    let profile: ProfileCardModel
-    let isDetail: Bool
+    private let profile: ProfileCardModel
+    private let isDetail: Bool
     
     init(profile: ProfileCardModel, isDetail: Bool = false) {
         self.profile = profile
