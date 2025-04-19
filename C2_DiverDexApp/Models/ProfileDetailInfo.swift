@@ -10,6 +10,7 @@ import Foundation
 struct ProfileDetailInfo: Identifiable {
     let id = UUID()
     let name: String
+    let number: String
     let nickname: String
     let email: String
     let blog: String

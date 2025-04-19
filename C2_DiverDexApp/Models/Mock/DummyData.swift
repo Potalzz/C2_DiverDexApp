@@ -32,6 +32,7 @@ struct DummyData {
     static let sampleProfileDetailInfoDatas = [
         ProfileDetailInfo(
             name: "김진혁",
+            number: "010-1234-1234",
             nickname: "Velko",
             email: "velkozKing@gmail.com",
             blog: "velkoz'slog.velog.com",

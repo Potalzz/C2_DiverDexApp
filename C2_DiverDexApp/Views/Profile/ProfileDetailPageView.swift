@@ -124,6 +124,7 @@ struct ProfileInfoView: View {
                     Divider()
 
                     TextWithPopup(title: "이름", value: info.name)
+                    TextWithPopup(title: "연락처", value: info.number)
                     TextWithPopup(title: "메일", value: info.email)
                     TextWithPopup(title: "블로그", value: info.blog)
                     TextWithPopup(title: "러너위키", value: info.wiki)
